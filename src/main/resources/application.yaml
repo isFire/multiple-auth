@@ -1,2 +1,8 @@
 server:
   port: 8888
+
+cas:
+  server-url: http://172.16.8.194:9090/cas
+  server-login-url: ${cas.server-url}/login
+  server-logout-url: ${cas.server-url}/logout
+  front-url: http://127.0.0.1:9999

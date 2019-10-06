@@ -32,19 +32,19 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                 .enableSessionUrlRewriting(false)
                 .and()
                 .authorizeRequests()
-                // 登录请求放行
-                .antMatchers(Login.COMMON_LOGIN, Login.COMMON_LOGOUT).permitAll()
+                // 登录与注销请求放行
+                .antMatchers(Login.CAS_LOGIN, Login.CAS_LOGOUT).permitAll()
                 // 其他请求一律拦截
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginProcessingUrl(Login.COMMON_LOGIN)
+                .loginProcessingUrl(Login.CAS_LOGIN)
                 .failureHandler(loginFailureHandler())
                 .successHandler(loginSuccessHandler())
                 .and()
                 .csrf().disable()
                 .logout()
-                .logoutUrl(Login.COMMON_LOGOUT)
+                .logoutUrl(Login.CAS_LOGOUT)
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
                 .exceptionHandling()

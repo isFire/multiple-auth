@@ -7,8 +7,8 @@ package com.dtstack.multiple.auth.consts;
  */
 public class Login {
 
-    public static final String COMMON_LOGIN = Api.API_PREFIX + "/common-login";
+    public static final String CAS_LOGIN = Api.API_PREFIX + "/cas-login";
 
-    public static final String COMMON_LOGOUT = Api.API_PREFIX + "/common-logout";
+    public static final String CAS_LOGOUT = Api.API_PREFIX + "/cas-logout";
 
 }
