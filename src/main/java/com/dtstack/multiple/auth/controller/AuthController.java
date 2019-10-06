@@ -21,9 +21,5 @@ public class AuthController {
         return SecurityUtils.getUser();
     }
 
-    @GetMapping(value = "/common-logout")
-    public Boolean commonLogout() {
-        return Boolean.TRUE;
-    }
 
 }

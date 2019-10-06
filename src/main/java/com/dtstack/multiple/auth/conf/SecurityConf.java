@@ -1,18 +1,17 @@
 package com.dtstack.multiple.auth.conf;
 
 import com.dtstack.multiple.auth.conf.handler.*;
-import com.dtstack.multiple.auth.conf.impl.CommonUserDetailServiceImpl;
+import com.dtstack.multiple.auth.conf.impl.CasUserDetailServiceImpl;
 import com.dtstack.multiple.auth.consts.Login;
-import com.dtstack.multiple.auth.util.PasswordUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -59,21 +58,15 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/static/**");
     }
 
-    @Bean
-    @ConditionalOnMissingBean(value = PasswordEncoder.class)
-    public PasswordEncoder passwordEncoder() {
-        return new PasswordUtils();
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(commonUserDetailService()).passwordEncoder(passwordEncoder());
+        auth.parentAuthenticationManager(authenticationManager());
     }
 
     @Bean
-    @ConditionalOnMissingBean(value = CommonUserDetailServiceImpl.class)
-    public UserDetailsService commonUserDetailService() {
-        return new CommonUserDetailServiceImpl();
+    @ConditionalOnMissingBean(value = CasUserDetailServiceImpl.class)
+    public AuthenticationUserDetailsService<CasAssertionAuthenticationToken> casUserDetailService() {
+        return new CasUserDetailServiceImpl();
     }
 
     @Bean

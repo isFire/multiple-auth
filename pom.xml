@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.dtstack</groupId>
     <artifactId>multiple-auth</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <name>multiple-auth</name>
     <description>SpringBoot Security 集成多种登录方式</description>
 
@@ -35,6 +35,10 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-cas</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

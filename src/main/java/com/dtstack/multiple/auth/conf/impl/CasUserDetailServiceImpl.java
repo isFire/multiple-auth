@@ -1,6 +1,9 @@
 package com.dtstack.multiple.auth.conf.impl;
 
 import com.dtstack.multiple.auth.entity.UserEntity;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,19 +16,20 @@ import java.util.List;
  * @description TODO
  * @date 2019/10/5 22:49
  */
-public class CommonUserDetailServiceImpl implements UserDetailsService {
+@Slf4j
+public class CasUserDetailServiceImpl implements AuthenticationUserDetailsService<CasAssertionAuthenticationToken> {
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserDetails(CasAssertionAuthenticationToken token) throws UsernameNotFoundException {
+        String name = token.getAssertion().getPrincipal().getName();
         List<String> list = new ArrayList<>();
-        list.add("commonLogin");
+        list.add("casLogin");
         list.add("getUserInfo");
         UserEntity user = new UserEntity();
-        user.setUsername(username);
-        user.setId(1000L);
+        user.setUsername(name);
+        user.setId(2000L);
         user.setPassword("e99a18c428cb38d5f260853678922e03");
         user.setMenus(list);
         return user;
     }
-
 }
