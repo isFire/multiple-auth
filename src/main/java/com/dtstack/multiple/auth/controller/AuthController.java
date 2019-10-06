@@ -1,10 +1,12 @@
 package com.dtstack.multiple.auth.controller;
 
 import com.dtstack.multiple.auth.consts.Api;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.dtstack.multiple.auth.entity.UserEntity;
+import com.dtstack.multiple.auth.entity.UserParam;
+import com.dtstack.multiple.auth.util.SecretUtils;
+import com.dtstack.multiple.auth.util.SecurityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author <a href="mailto:guchen@dtstack.com">古尘 At 袋鼠云</a>.
@@ -16,8 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @PostMapping(value = "/common-login")
-    public String commonLogin() {
-        return "";
+    public Boolean commonLogin(@RequestParam String username, @RequestParam String password) {
+        return Boolean.TRUE;
     }
 
+    @GetMapping(value = "/getUserInfo")
+    public UserDetails getUserInfo() {
+        return SecurityUtils.getUser();
+    }
 }

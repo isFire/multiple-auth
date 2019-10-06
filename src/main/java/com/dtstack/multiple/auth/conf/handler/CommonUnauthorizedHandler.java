@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
@@ -26,6 +27,8 @@ public class CommonUnauthorizedHandler implements AuthenticationEntryPoint {
             log.error("Authentication Exception Handler. -------->{}", request.getRequestURI());
         }
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        response.setContentType("application/json");
         response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString("当前用户未认证,请认证后重试!!!")));
         response.flushBuffer();
     }

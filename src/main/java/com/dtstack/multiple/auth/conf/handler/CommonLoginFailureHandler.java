@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
@@ -27,6 +28,8 @@ public class CommonLoginFailureHandler implements AuthenticationFailureHandler {
         }
         // TODO 登录失败日志
         response.setStatus(HttpStatus.OK.value());
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        response.setContentType("application/json");
         response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString("用户登录失败,用户名或密码错误!!!")));
         response.flushBuffer();
     }
