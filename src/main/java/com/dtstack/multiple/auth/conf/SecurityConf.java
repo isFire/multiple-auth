@@ -2,7 +2,7 @@ package com.dtstack.multiple.auth.conf;
 
 import com.dtstack.multiple.auth.conf.handler.*;
 import com.dtstack.multiple.auth.conf.impl.CommonUserDetailServiceImpl;
-import com.dtstack.multiple.auth.consts.Api;
+import com.dtstack.multiple.auth.consts.Login;
 import com.dtstack.multiple.auth.util.PasswordUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -34,18 +34,18 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 登录请求放行
-                .antMatchers(Api.API_PREFIX + "/common-login").permitAll()
+                .antMatchers(Login.COMMON_LOGIN, Login.COMMON_LOGOUT).permitAll()
                 // 其他请求一律拦截
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginProcessingUrl(Api.API_PREFIX + "/common-login")
+                .loginProcessingUrl(Login.COMMON_LOGIN)
                 .failureHandler(loginFailureHandler())
                 .successHandler(loginSuccessHandler())
                 .and()
                 .csrf().disable()
                 .logout()
-                .logoutSuccessUrl(Api.API_PREFIX + "/logout")
+                .logoutUrl(Login.COMMON_LOGOUT)
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
                 .exceptionHandling()

@@ -1,5 +1,6 @@
 package com.dtstack.multiple.auth.conf.handler;
 
+import com.dtstack.multiple.auth.entity.UserVO;
 import com.dtstack.multiple.auth.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,13 @@ public class CommonLoginFailureHandler implements AuthenticationFailureHandler {
             log.warn("登录失败", e);
         }
         // TODO 登录失败日志
+        UserVO userVO = new UserVO();
+        userVO.setStatus("ERROR");
+        userVO.setMessage("登录失败,用户名或密码错误");
         response.setStatus(HttpStatus.OK.value());
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType("application/json");
-        response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString("用户登录失败,用户名或密码错误!!!")));
+        response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString(userVO)));
         response.flushBuffer();
     }
 }

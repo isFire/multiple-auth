@@ -1,5 +1,6 @@
 package com.dtstack.multiple.auth.conf.handler;
 
+import com.dtstack.multiple.auth.entity.UserVO;
 import com.dtstack.multiple.auth.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,10 +27,13 @@ public class CommonUnauthorizedHandler implements AuthenticationEntryPoint {
         if (log.isErrorEnabled()) {
             log.error("Authentication Exception Handler. -------->{}", request.getRequestURI());
         }
+        UserVO userVO = new UserVO();
+        userVO.setStatus("ERROR");
+        userVO.setMessage("当前用户尚未认证,请认证后重试");
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType("application/json");
-        response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString("当前用户未认证,请认证后重试!!!")));
+        response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString(userVO)));
         response.flushBuffer();
     }
 }

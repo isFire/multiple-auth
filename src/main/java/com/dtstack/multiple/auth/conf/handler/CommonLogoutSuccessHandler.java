@@ -1,5 +1,6 @@
 package com.dtstack.multiple.auth.conf.handler;
 
+import com.dtstack.multiple.auth.entity.UserVO;
 import com.dtstack.multiple.auth.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,16 @@ public class CommonLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         if (log.isInfoEnabled()) {
-            log.info("用户注销登录成功 --------> {}", authentication);
+            log.info("用户注销登录成功 -------->");
         }
         // TODO 注销登录成功日志
+        UserVO userVO = new UserVO();
+        userVO.setStatus("SUCCESS");
+        userVO.setMessage("注销成功");
         response.setStatus(HttpStatus.OK.value());
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType("application/json");
-        response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString("注销登录成功")));
+        response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString(userVO)));
         response.flushBuffer();
     }
 }

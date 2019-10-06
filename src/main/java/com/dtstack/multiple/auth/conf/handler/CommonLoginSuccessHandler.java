@@ -1,5 +1,6 @@
 package com.dtstack.multiple.auth.conf.handler;
 
+import com.dtstack.multiple.auth.entity.UserVO;
 import com.dtstack.multiple.auth.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,11 +28,14 @@ public class CommonLoginSuccessHandler implements AuthenticationSuccessHandler {
             log.info("用户登录成功 --------> {}", authentication);
         }
         // TODO 登录成功日志
+        UserVO userVO = new UserVO();
+        userVO.setStatus("SUCCESS");
+        userVO.setMessage("登录成功");
+        userVO.setPrincipal(authentication.getPrincipal());
         response.setStatus(HttpStatus.OK.value());
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType("application/json");
-        response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString("登录成功")));
-        response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString(authentication.getPrincipal())));
+        response.getWriter().write(Objects.requireNonNull(JsonUtils.toJsonString(userVO)));
         response.flushBuffer();
     }
 }
